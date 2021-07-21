@@ -1,5 +1,12 @@
-<mat-grid-list class="employee-list" cols="4">
-  <mat-grid-tile *ngFor="let emp of employees">
-    <app-employee [employee]="emp"></app-employee>
-  </mat-grid-tile>
-</mat-grid-list>
+<!-- <mat-grid-list 
+  class="employee-list" 
+  cols="1"
+  rowHeight
+>
+  <mat-grid-tile *ngFor="let emp of employees"> -->
+    <app-employee 
+      *ngFor="let emp of employees"
+      [employee]="emp">
+    </app-employee>
+  <!-- </mat-grid-tile>
+</mat-grid-list> -->
