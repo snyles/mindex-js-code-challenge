@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { take } from 'rxjs/operators';
+import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
 
 import {Employee} from '../employee';
 import {EmployeeService} from '../employee.service';
@@ -10,17 +9,17 @@ import {EmployeeService} from '../employee.service';
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  @Input() employee: Employee;
-  // @Input() employees: Employee[];
+  @Input() employee: Employee;  
   directReports: Employee[] = [];
   totalReports: number = 0;
+  @Output() onEditClick: EventEmitter<Employee> = new EventEmitter;
+  @Output() onDeleteClick: EventEmitter<Employee> = new EventEmitter;
 
   constructor(private employeeService: EmployeeService) {
   }
 
   ngOnInit(): void {
-
-    // if employee has direct results, populate array with employee data
+    // if employee has direct reports, populate array with employee data
     // and add indirect reports to reports total
     if(this.employee.directReports) {
       this.totalReports = this.employee.directReports.length
@@ -35,4 +34,13 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
+  editClick(employee: Employee) {
+    // console.log("edit clicked", employee)
+    this.onEditClick.emit(employee);
+  }
+
+  deleteClick(employee: Employee) {
+    // console.log("delete clicked", employee)
+    this.onDeleteClick.emit(employee);
+  }
 }

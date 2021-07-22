@@ -1,17 +1,33 @@
 .employee {
   margin: 0 auto 1rem auto;
-  width: 95%;
+  width: 90%;
 }
 
 .report-list-header {
-  background: #999;
+  background: #ccc;
   margin-top: 10px;
 }
 
+mat-list {
+  width: 95%;
+  margin: 0 auto;
+}
 mat-list-item{
   background: #e3e3e3;
 }
 
 span.buttons {
   margin-left: auto;
+}
+
+mat-icon {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+mat-icon:hover {
+  color: steelblue;
+}
+mat-icon:active {
+  color: blue;
 }

@@ -21,8 +21,16 @@
       >
         {{report.firstName}} {{report.lastName}}, {{report.position}}
         <span class="buttons">
-          <mat-icon>edit</mat-icon>
-          <mat-icon>delete</mat-icon>
+          <mat-icon
+            (click)="editClick(report)"
+          >
+            edit
+          </mat-icon>
+          <mat-icon
+            (click)="deleteClick(report)"
+          >
+            delete
+          </mat-icon>
         </span>
       </mat-list-item>
       <mat-list-item

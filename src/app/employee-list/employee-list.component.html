@@ -1,13 +1,12 @@
-<!-- <mat-grid-list 
-  class="employee-list" 
-  cols="1"
-  rowHeight
+<app-employee 
+  *ngFor="let emp of employees"
+  [employee]="emp"
+  (onEditClick)="toggleUpdateModal($event)"
+  (onDeleteClick)="toggleDeleteModal($event)"
 >
-  <mat-grid-tile *ngFor="let emp of employees"> -->
-    <app-employee 
-      *ngFor="let emp of employees"
-      [employee]="emp"
-    >
-    </app-employee>
-  <!-- </mat-grid-tile>
-</mat-grid-list> -->
+</app-employee>
+<app-dialog
+  (onSaveCompensation)="updateCompensation($event)"
+  (onDeleteReport)="deleteDirectReport($event)"
+>
+</app-dialog>
