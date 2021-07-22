@@ -20,7 +20,10 @@
         class="report-list-item"
       >
         {{report.firstName}} {{report.lastName}}, {{report.position}}
-        <span class="buttons">Edit, Delete</span>
+        <span class="buttons">
+          <mat-icon>edit</mat-icon>
+          <mat-icon>delete</mat-icon>
+        </span>
       </mat-list-item>
       <mat-list-item
         *ngIf="!directReports.length"
