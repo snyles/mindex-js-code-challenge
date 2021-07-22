@@ -20,9 +20,13 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getAll()
       .pipe(
         reduce((emps, e: Employee) => emps.concat(e), []),
-        map(emps => this.employees = emps),
+        map(emps => {
+          console.log("employees", emps);
+          this.employees = emps
+        }),
         catchError(this.handleError.bind(this))
       ).subscribe();
+    
   }
 
   private handleError(e: Error | any): string {

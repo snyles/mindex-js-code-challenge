@@ -2,3 +2,16 @@
   margin: 0 auto 1rem auto;
   width: 95%;
 }
+
+.report-list-header {
+  background: #999;
+  margin-top: 10px;
+}
+
+mat-list-item{
+  background: #e3e3e3;
+}
+
+span.buttons {
+  margin-left: auto;
+}
