@@ -6,6 +6,7 @@
     <mat-card-subtitle>
       Employee ID: {{employee.id}} 
       Direct Reports: {{totalReports}}
+      <p *ngIf="employee.compensation" style="color: green">${{employee.compensation}}</p>
     </mat-card-subtitle>
     
   </mat-card-header>
@@ -27,7 +28,10 @@
             edit
           </mat-icon>
           <mat-icon
-            (click)="deleteClick(report)"
+            (click)="deleteClick({
+              supervisorId: employee.id,
+              report: report
+            })"
           >
             delete
           </mat-icon>

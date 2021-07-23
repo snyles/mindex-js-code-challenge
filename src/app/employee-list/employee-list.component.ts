@@ -36,24 +36,32 @@ export class EmployeeListComponent implements OnInit {
   }
 
   toggleUpdateModal(employee: Employee) {
-    this.dialogService.toggleDialog('update', employee);
+    // this.dialogService.toggleDialog('update', employee);
+    this.updateEmployee(employee)
   }
 
-  toggleDeleteModal(employee: Employee) {
-    this.dialogService.toggleDialog('delete', employee);
+  toggleDeleteModal({supervisorId, report}) {
+    // this.dialogService.toggleDialog('delete', employee);
+    this.deleteDirectReport(supervisorId, report.id)
   }
 
   updateEmployee(employee: Employee) {
-    this.employeeService.save(employee).subscribe(emp => console.log("updated employee", emp))
+    const newEmployee = {...employee, compensation: 100000}
+    this.employeeService.save(newEmployee).subscribe(emp =>
+      this.employees[emp.id-1] = emp)
   }
 
   deleteDirectReport(supervisorId: number, directReportId: number) {
     this.employeeService.get(supervisorId).subscribe(sup => {
       console.log("found supervisor", sup)
       if(sup.directReports) {
-        const idx = sup.directReports.findIndex(directReportId)
-        sup.directReports.splice(idx, 1)
-        this.employeeService.save(sup).subscribe(sup => console.log("updated supervisor", sup))
+        const newReports = sup.directReports.filter(id => id !== directReportId)
+        const updatedSup = {
+          ...sup,
+          directReports: newReports
+        }
+        this.employeeService.save(updatedSup).subscribe(sup => 
+          this.employees[sup.id-1] = sup)
       } else {
         console.log("No direct reports found")
       }
