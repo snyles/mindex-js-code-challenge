@@ -1,6 +1,6 @@
 .employee {
   margin: 0 auto 1rem auto;
-  width: 90%;
+  width: 80%;
 }
 
 .report-list-header {
@@ -30,4 +30,8 @@ mat-icon:hover {
 }
 mat-icon:active {
   color: blue;
+}
+
+mat-card-title {
+  color: steelblue;
 }
