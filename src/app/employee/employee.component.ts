@@ -1,7 +1,9 @@
 import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 import {Employee} from '../employee';
 import {EmployeeService} from '../employee.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-employee',
@@ -12,10 +14,12 @@ export class EmployeeComponent implements OnInit {
   @Input() employee: Employee;  
   directReports: Employee[] = [];
   totalReports: number = 0;
-  @Output() onEditClick: EventEmitter<Employee> = new EventEmitter;
-  @Output() onDeleteClick: EventEmitter<Employee> = new EventEmitter;
+  @Output() onEditConfirm: EventEmitter<any> = new EventEmitter;
+  @Output() onDeleteConfirm: EventEmitter<any> = new EventEmitter;
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private employeeService: EmployeeService,
+    public dialog:MatDialog
+    ) {
   }
 
   ngOnInit(): void {
@@ -34,13 +38,40 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  editClick(employee: Employee) {
-    // console.log("edit clicked", employee)
-    this.onEditClick.emit(employee);
+  //open dialog function
+  openDialog(type: string, directReport: Employee) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        type: type,
+        employee: directReport,
+      }
+    })
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("result", result)
+      if (result?.type) {
+        result.type === 'update' ? 
+          this.editConfirm(result.compensation, result.report)
+          :
+          this.deleteConfirm(result.report)
+      }
+    })
   }
 
-  deleteClick(employee: Employee) {
-    // console.log("delete clicked", employee)
-    this.onDeleteClick.emit(employee);
+  editConfirm(newCompensation: number, report) {
+    // console.log("edit clicked", employee)
+    // this.openDialog('update', employee, null)
+    const newEmp = {
+      employee: report,
+      compensation: newCompensation
+    }
+    this.onEditConfirm.emit(newEmp);
+  }
+
+  deleteConfirm(report: Employee) {
+    const deleteData = {
+      supervisorId: this.employee.id,
+      reportId: report.id
+    }
+    this.onDeleteConfirm.emit(deleteData);
   }
 }

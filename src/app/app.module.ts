@@ -17,16 +17,15 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list'
 import {MatDividerModule} from '@angular/material/divider';
-import {DialogComponent, DialogContents} from './dialog/dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {DialogComponent} from './dialog/dialog.component';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
     EmployeeListComponent,
-    DialogComponent,
-    DialogContents
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +49,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatDividerModule,
     MatDialogModule
   ],
-  providers: [EmployeeService],
+  providers: [
+    EmployeeService,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} }
+  ],
+    
   bootstrap: [AppComponent]
 })
 export class AppModule {

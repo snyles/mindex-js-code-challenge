@@ -6,7 +6,7 @@
     <mat-card-subtitle>
       Employee ID: {{employee.id}} 
       Direct Reports: {{totalReports}}
-      <p *ngIf="employee.compensation" style="color: green">${{employee.compensation}}</p>
+      <p *ngIf="employee.compensation" style="color: green">Compensation: ${{employee.compensation}}</p>
     </mat-card-subtitle>
     
   </mat-card-header>
@@ -23,15 +23,12 @@
         {{report.firstName}} {{report.lastName}}, {{report.position}}
         <span class="buttons">
           <mat-icon
-            (click)="editClick(report)"
+            (click)="openDialog('update', report)"
           >
             edit
           </mat-icon>
           <mat-icon
-            (click)="deleteClick({
-              supervisorId: employee.id,
-              report: report
-            })"
+            (click)="openDialog('delete', report)"
           >
             delete
           </mat-icon>

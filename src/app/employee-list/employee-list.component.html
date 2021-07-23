@@ -1,12 +1,9 @@
 <app-employee 
   *ngFor="let emp of employees"
   [employee]="emp"
-  (onEditClick)="toggleUpdateModal($event)"
-  (onDeleteClick)="toggleDeleteModal($event)"
+  (onEditConfirm)="updateEmployee($event)"
+  (onDeleteConfirm)="deleteDirectReport($event)"
 >
 </app-employee>
-<app-dialog
-  (onSaveCompensation)="updateCompensation($event)"
-  (onDeleteReport)="deleteDirectReport($event)"
->
+<app-dialog>
 </app-dialog>

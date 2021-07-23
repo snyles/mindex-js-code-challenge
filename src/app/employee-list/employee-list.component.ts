@@ -3,7 +3,6 @@ import {catchError, map, reduce} from 'rxjs/operators';
 
 import {Employee} from '../employee';
 import {EmployeeService} from '../employee.service';
-import {DialogService} from '../dialog.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -16,7 +15,8 @@ export class EmployeeListComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService, 
-    private dialogService: DialogService) { }
+    // private dialogService: DialogService,
+    ) { }
 
   ngOnInit(): void {
     this.employeeService.getAll()
@@ -35,27 +35,20 @@ export class EmployeeListComponent implements OnInit {
     return this.errorMessage = e.message || 'Unable to retrieve employees';
   }
 
-  toggleUpdateModal(employee: Employee) {
-    // this.dialogService.toggleDialog('update', employee);
-    this.updateEmployee(employee)
-  }
-
-  toggleDeleteModal({supervisorId, report}) {
-    // this.dialogService.toggleDialog('delete', employee);
-    this.deleteDirectReport(supervisorId, report.id)
-  }
-
-  updateEmployee(employee: Employee) {
-    const newEmployee = {...employee, compensation: 100000}
+  updateEmployee(newEmp) {
+    const newEmployee = {
+      ...newEmp.employee,
+      compensation: newEmp.compensation
+    }
     this.employeeService.save(newEmployee).subscribe(emp =>
       this.employees[emp.id-1] = emp)
   }
 
-  deleteDirectReport(supervisorId: number, directReportId: number) {
+  deleteDirectReport({supervisorId, reportId}) {
     this.employeeService.get(supervisorId).subscribe(sup => {
       console.log("found supervisor", sup)
       if(sup.directReports) {
-        const newReports = sup.directReports.filter(id => id !== directReportId)
+        const newReports = sup.directReports.filter(id => id !== reportId)
         const updatedSup = {
           ...sup,
           directReports: newReports
